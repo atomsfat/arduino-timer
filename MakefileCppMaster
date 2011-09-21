@@ -212,9 +212,9 @@ $(TMPDIRPATH)%.cpp: %.pde
 
 
 .PHONY: all
-all: tmpdir $(HEXNAME) 
-# assemblersource showsize
-#	ls -al $(HEXNAME) $(ELFNAME)
+all: tmpdir $(HEXNAME) assemblersource showsize
+	ls -al $(HEXNAME) $(ELFNAME)
+
 
 $(ELFNAME): $(LIBNAME)($(addprefix $(TMPDIRPATH),$(OBJFILES))) 
 	$(LINK.o) $(COMMON_FLAGS) $(LIBNAME) $(LOADLIBES) $(LDLIBS) -o $@

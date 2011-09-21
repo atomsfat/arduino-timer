@@ -1,10 +1,9 @@
-
 #
 # Arduino 0022 Makefile 
 # Uno with DOGS102 Shield
 #
 # written by olikraus@gmail.com
-#
+# taken from: http://code.google.com/p/dogm128/source/browse/libraries/Dogm/examples/SpaceTrash/Makefile.uno_dogs102
 # Features:
 #   - boards.txt is used to derive parameters
 #   - All intermediate files are put into a separate directory (TMPDIRNAME)
@@ -36,7 +35,7 @@
 #	mega		Arduino Mega
 #	mini			Arduino Mini
 #	lilypad328	LilyPad Arduino w/ ATmega328  
-BOARD:=atmega328
+BOARD:=uno
 
 # additional (comma separated) defines 
 # -DDOGM128_HW		board is connected to DOGM128 display
@@ -44,14 +43,14 @@ BOARD:=atmega328
 # -DDOGS102_HW		board is connected to DOGS102 display
 # -DDOG_REVERSE		180 degree rotation
 # -DDOG_SPI_SW_ARDUINO	force SW shiftOut
-#DEFS=-DDOGS102_HW -DDOG_DOUBLE_MEMORY -DDOG_SPI_SW_ARDUINO
+DEFS=-DDOGS102_HW -DDOG_DOUBLE_MEMORY -DDOG_SPI_SW_ARDUINO
 
 # The location where the avr tools (e.g. avr-gcc) are located. Requires a '/' at the end.
 # Can be empty if all tools are accessable through the search path
 AVR_TOOLS_PATH:=/usr/bin/
 
 # Install path of the arduino software. Requires a '/' at the end.
-ARDUINO_PATH:=/home/bending/java/arduino-0022/
+ARDUINO_PATH:=/home/kraus/prg/arduino-0022/
 
 # Install path for avrdude. Requires a '/' at the end. Can be empty if avrdude is in the search path.
 AVRDUDE_PATH:= 
@@ -59,12 +58,12 @@ AVRDUDE_PATH:=
 # The unix device where we can reach the arduino board
 # Uno: /dev/ttyACM0
 # Duemilanove: /dev/ttyUSB0
-AVRDUDE_PORT:=/dev/ttyUSB0
+AVRDUDE_PORT:=/dev/ttyACM0
 
 # List of all libaries which should be included.
 EXTRA_DIRS=$(ARDUINO_PATH)libraries/LiquidCrystal/
 #EXTRA_DIRS+=$(ARDUINO_PATH)libraries/Dogm/
-#EXTRA_DIRS+=/home/kraus/src/arduino/dogm128/hg/libraries/Dogm/
+EXTRA_DIRS+=/home/kraus/src/arduino/dogm128/hg/libraries/Dogm/
 
 #=== fetch parameter from boards.txt processor parameter ===
 # the basic idea is to get most of the information from boards.txt
@@ -95,7 +94,7 @@ CSRC:=$(shell ls $(CDIRS) 2>/dev/null)
 CCSRC:=$(shell ls *.cc 2>/dev/null)
 
 CPPDIRS:=$(EXTRA_DIRS) $(addsuffix utility/,$(EXTRA_DIRS))
-CPPDIRS:=*.cpp utility/*.cpp $(addsuffix *.cpp,$(CPPDIRS)) $(shell find $(ARDUINO_PATH)hardware/arduino/cores/arduino/ -type f -name "*.cpp" | grep -v main.cpp) 
+CPPDIRS:=*.cpp utility/*.cpp $(addsuffix *.cpp,$(CPPDIRS)) $(ARDUINO_PATH)hardware/arduino/cores/arduino/*.cpp 
 CPPSRC:=$(shell ls $(CPPDIRS) 2>/dev/null)
 
 #=== build internal variables ===
@@ -110,12 +109,10 @@ OBJCOPY:=$(AVRTOOLSPATH)avr-objcopy
 OBJDUMP:=$(AVRTOOLSPATH)avr-objdump
 SIZE:=$(AVRTOOLSPATH)avr-size
 
-CPPSRC:=$(addprefix $(TMPDIRPATH),$(PDESRC:.Main.cpp)) $(CPPSRC)
-#CPPSRC:=$(addprefix $(TMPDIRPATH),$(PDESRC:.pde=.cpp)) $(CPPSRC)
+CPPSRC:=$(addprefix $(TMPDIRPATH),$(PDESRC:.pde=.cpp)) $(CPPSRC)
+
 COBJ:=$(CSRC:.c=.o)
 CCOBJ:=$(CCSRC:.cc=.o)
-COBJ:=$(CSRC:.c=.o)
-CdCOBJ:=$(CCSRC:.cc=.o)"
 CPPOBJ:=$(CPPSRC:.cpp=.o)
 
 OBJFILES:=$(COBJ) $(CCOBJ) $(CPPOBJ)
@@ -175,34 +172,33 @@ RM = rm -rf
 # reuse existing variables as far as possible
 
 $(TMPDIRPATH)%.o: %.c
-	echo compile $<
-	$(COMPILE.c) $(OUTPUT_OPTION) $<
+	@echo compile $<
+	@$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 $(TMPDIRPATH)%.o: %.cc
-	echo compile $< 
-	$(COMPILE.cc) $(OUTPUT_OPTION) $<
+	@echo compile $< 
+	@$(COMPILE.cc) $(OUTPUT_OPTION) $<
 
 $(TMPDIRPATH)%.o: %.cpp
-	echo compile $<
-	$(COMPILE.cpp) $(OUTPUT_OPTION) $<
-
+	@echo compile $<
+	@$(COMPILE.cpp) $(OUTPUT_OPTION) $<
 
 $(TMPDIRPATH)%.s: %.c
-	$(COMPILE.c) $(OUTPUT_OPTION) -S $<
+	@$(COMPILE.c) $(OUTPUT_OPTION) -S $<
 
 $(TMPDIRPATH)%.s: %.cc
-	$(COMPILE.cc) $(OUTPUT_OPTION) -S $<
+	@$(COMPILE.cc) $(OUTPUT_OPTION) -S $<
 
 $(TMPDIRPATH)%.s: %.cpp
-	$(COMPILE.cpp) $(OUTPUT_OPTION) -S $<
+	@$(COMPILE.cpp) $(OUTPUT_OPTION) -S $<
 
 $(TMPDIRPATH)%.dis: $(TMPDIRPATH)%.o
-	$(OBJDUMP) -S $< > $@
+	@$(OBJDUMP) -S $< > $@
 
 .SUFFIXES: .elf .hex .pde
 
 .elf.hex:
-	$(OBJCOPY) -O ihex -R .eeprom $< $@
+	@$(OBJCOPY) -O ihex -R .eeprom $< $@
 	
 $(TMPDIRPATH)%.cpp: %.pde
 	@cat $(ARDUINO_PATH)hardware/arduino/cores/arduino/main.cpp > $@
@@ -212,9 +208,8 @@ $(TMPDIRPATH)%.cpp: %.pde
 
 
 .PHONY: all
-all: tmpdir $(HEXNAME) 
-# assemblersource showsize
-#	ls -al $(HEXNAME) $(ELFNAME)
+all: tmpdir $(HEXNAME) assemblersource showsize
+	ls -al $(HEXNAME) $(ELFNAME)
 
 $(ELFNAME): $(LIBNAME)($(addprefix $(TMPDIRPATH),$(OBJFILES))) 
 	$(LINK.o) $(COMMON_FLAGS) $(LIBNAME) $(LOADLIBES) $(LDLIBS) -o $@
@@ -225,7 +220,7 @@ $(LIBNAME)(): $(addprefix $(TMPDIRPATH),$(OBJFILES))
 # not really required, because it will be also created during the dependency handling
 .PHONY: tmpdir
 tmpdir:
-	test -d $(TMPDIRPATH) || mkdir $(TMPDIRPATH)
+	@test -d $(TMPDIRPATH) || mkdir $(TMPDIRPATH)
 
 #=== create assembler files for each C/C++ file ===
 .PHONY: assemblersource
@@ -275,5 +270,3 @@ $(TMPDIRPATH)%.d: %.cpp
 # Include dependency files. If a .d file is missing, a warning is created and the .d file is created
 # This warning is not a problem (gnu make manual, section 3.3 Including Other Makefiles)
 -include $(addprefix $(TMPDIRPATH),$(DEPFILES))
-
-
