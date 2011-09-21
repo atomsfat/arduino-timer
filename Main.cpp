@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-#include <LiquidCrystal.h>
+#include "LiquidCrystal.h"
 
 
 #include "Controller.h"
@@ -78,10 +78,10 @@ int maxServo = 180;
 void setup() {
 
 	// initialize the pushbutton as input
-//	pinMode(buttonDown, INPUT);
-//	pinMode(buttonUp, INPUT);
-//	pinMode(buttonOk, INPUT);
-//	pinMode(buttonCancel, INPUT);
+	pinMode(buttonDown, INPUT);
+	pinMode(buttonUp, INPUT);
+	pinMode(buttonOk, INPUT);
+	pinMode(buttonCancel, INPUT);
 
 	//this because the default home is no always the same for lcds
 
@@ -97,50 +97,50 @@ void setup() {
 void loop()
 
 {
-//
-//
-//	// read the state of the pushbutton
-//
-//	if (digitalRead(buttonDown)) {
-//		controller.pressDown();
-//
-//	} else if (digitalRead(buttonUp) == 1) {
-//		controller.pressUp();
-//	} else if (digitalRead(buttonOk) == 1) {
-//		controller.pressOk();
-//	} else if (digitalRead(buttonCancel) == 1) {
-//		controller.pressCancel();
-//	}
-//
-//	if(model->boilerOn){
-//
-//	}else{
-//
-//	}
-//
-//	 controller.display(message);
-//
-//	 lcd.clear();
-//	 lcd.setCursor(4,0);
-//
-//	  for(int i=0; i< strlen(message); i++){
-//
-//	            if((i+1)%17==0){
-//	                 lcd.setCursor(4,1);
-//	            }
-//	            lcd.print(message[i]);
-//
-//	        }
-//
-//
-//
-//	delay(500);
+
+
+	// read the state of the pushbutton
+
+	if (digitalRead(buttonDown)) {
+		controller.pressDown();
+
+	} else if (digitalRead(buttonUp) == 1) {
+		controller.pressUp();
+	} else if (digitalRead(buttonOk) == 1) {
+		controller.pressOk();
+	} else if (digitalRead(buttonCancel) == 1) {
+		controller.pressCancel();
+	}
+
+	if(model->boilerOn){
+
+	}else{
+
+	}
+
+	 controller.display(message);
+
+	 lcd.clear();
+	 lcd.setCursor(4,0);
+
+	  for(int i=0; i< strlen(message); i++){
+
+	            if((i+1)%17==0){
+	                 lcd.setCursor(4,1);
+	            }
+	            lcd.print(message[i]);
+
+	        }
+
+
+
+	delay(500);
 
 
 }
 
 int main(void) {
-	//init();
+	init();
 
 	setup();
 
