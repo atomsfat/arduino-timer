@@ -85,7 +85,7 @@ AVRDUDE_UPLOAD_RATE:=$(shell sed -n -e "s/$(BOARD).upload.speed=\(.*\)/\1/p" $(B
 AVRDUDE_PROGRAMMER:=stk500v1
 
 #=== identify user files ===
-PDESRC:=$(shell ls *.pde)
+PDESRC:=Main.cpp#$(shell ls *.pde)
 TARGETNAME=$(basename $(PDESRC))
 
 CDIRS:=$(EXTRA_DIRS) $(addsuffix utility/,$(EXTRA_DIRS))
