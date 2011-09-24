@@ -1,2 +1,6 @@
 /tmp
 /Debug
+Makefile
+.settings
+.cproject
+.project
