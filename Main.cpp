@@ -3,7 +3,7 @@
 
 
 #include "LiquidCrystal.h"
-
+#include "Servo.h"
 
 #include "Controller.h"
 #include "Model.h"
@@ -26,7 +26,7 @@ void loop();
 void * operator new(size_t size) {
 	return malloc(size);
 }
-
+//this enable delete operator
 void operator delete(void * ptr) {
 	free(ptr);
 }
@@ -59,6 +59,8 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 Model* model = new Model( rtc);
 Controller controller(model);
 
+Servo myservo;
+
 char message[40] = "Hola mundo";
 
 // constants won't change. They're used here to
@@ -86,6 +88,7 @@ void setup() {
 	//this because the default home is no always the same for lcds
 
 
+	myservo.attach(10);  //set servo to pin 10
 	lcd.begin(1, 2);    // configure lcd
 	//controller.display(hola);
 
