@@ -1,6 +1,9 @@
 #include <WProgram.h>
 #include <stdlib.h>
-
+//http://tushev.org/articles/electronics/48-arduino-and-watchdog-timer
+//http://blog.bricogeek.com/noticias/arduino/como-utilizar-watchdog-con-arduino/
+//watch dog
+#include <avr/wdt.h>
 
 #include "LiquidCrystal.h"
 #include "Servo.h"
@@ -49,6 +52,8 @@ extern "C" void __cxa_pure_virtual() {
 		;
 }
 
+
+
 //Here my program start
 
 int rtc[7]; //this is for store the hour
@@ -78,7 +83,7 @@ int minServo = 5; //
 int maxServo = 180;
 
 void setup() {
-
+	wdt_disable();
 	// initialize the pushbutton as input
 	pinMode(buttonDown, INPUT);
 	pinMode(buttonUp, INPUT);
@@ -92,6 +97,7 @@ void setup() {
 	lcd.begin(1, 2);    // configure lcd
 	//controller.display(hola);
 
+	wdt_enable(WDTO_2S);
 
 }
 
@@ -101,7 +107,7 @@ void loop()
 
 {
 
-
+	wdt_reset();
 	// read the state of the pushbutton
 
 	if (digitalRead(buttonDown)) {
@@ -116,9 +122,9 @@ void loop()
 	}
 
 	if(model->boilerOn){
-
+		myservo.write(maxServo);
 	}else{
-
+		myservo.write(minServo);
 	}
 
 	 controller.display(message);
@@ -137,7 +143,7 @@ void loop()
 
 
 
-	delay(500);
+	delay(100);
 
 
 }
