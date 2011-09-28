@@ -7,8 +7,7 @@
 
 #ifndef _MODEL_H
 #define	_MODEL_H
-#include <Wire.h>
-#include "RTClib.h"
+#include <inttypes.h>
 
 
 class Model {
@@ -20,12 +19,11 @@ public:
 
      //variables
     int *hora;
-    DateTime current;
-
+    uint32_t current;
 
     bool boilerOn;
     int howTimeOn;
-    int whenItStarted;
+    uint32_t whenItStarted;
 
 
 

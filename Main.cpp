@@ -3,6 +3,9 @@
 //#include <Wire.h>
 #include <stdlib.h>
 
+#include <Wire.h>
+#include "RTClib.h"
+
 
 //http://tushev.org/articles/electronics/48-arduino-and-watchdog-timer
 //http://blog.bricogeek.com/noticias/arduino/como-utilizar-watchdog-con-arduino/
@@ -131,7 +134,8 @@ void loop()
 
 	wdt_reset();
 
-	model->current =  RTC.now();
+	DateTime d = RTC.now();
+	model->current =  d.unixtime();
 
 
 	// read the state of the pushbutton
@@ -165,6 +169,28 @@ void loop()
 	            lcd.print(message[i]);
 
 	        }
+
+	  if( strlen(message) <= 17){
+		  lcd.setCursor(4,1);
+		  DateTime dt7 (model->current );
+
+		    //lcd.print(dt7.year(), DEC);
+		  //lcd.print('/');
+		  // lcd.print(dt7.month(), DEC);
+		  // lcd.print('/');
+		  // lcd.print(dt7.day(), DEC);
+		  // lcd.print(' ');
+
+
+		    lcd.print(dt7.hour(), DEC);
+		    lcd.print(':');
+		    lcd.print(dt7.minute(), DEC);
+		    lcd.print(':');
+		    lcd.print(dt7.second(), DEC);
+
+
+
+	  }
 
 
 

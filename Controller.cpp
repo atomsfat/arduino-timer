@@ -41,7 +41,7 @@ void Controller::pressCancel() {
 
 void Controller::display(char msg[]) {
 
-	//this->processCommand();
+	this->processCommand();
     current->display(msg);
 }
 
@@ -95,10 +95,22 @@ void Controller::goHome() {
 
 void Controller::processCommand(){
 
-     if((model->current.unixtime()) > (model->current.unixtime()+ (model->howTimeOn*60) )){
+    // if((model->current) > (model->whenItStarted+(model->howTimeOn*60) )){
 
-    	 model->boilerOn = false;
+    	// model->boilerOn = false;
+
+//     }
+
+     if(model->boilerOn){
+		 if(model->howTimeOn>0){
+		 model->howTimeOn = model->howTimeOn - ((model->current - model->whenItStarted)/60);
+		 }
+
+		 if(model->howTimeOn < 0){
+			 model->howTimeOn = 0;
+		 }
 
      }
+
 }
 

@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   EncederBoilerCmd.cpp
  * Author: atoms
- * 
+ *
  * Created on April 7, 2010, 10:46 PM
  */
 
@@ -32,6 +32,7 @@ void EncederBoilerCmd::ok() {
         if (model->boilerOn == false && model->howTimeOn > 0) {
 
             model->boilerOn = true;
+            model->whenItStarted = model->current;
             controller->goHome();
         }
 
@@ -64,7 +65,7 @@ void EncederBoilerCmd::up() {
     } else {
         if (model->boilerOn == false && model->howTimeOn < 60) {
 
-            model->howTimeOn = model->howTimeOn + 20;
+            model->howTimeOn = model->howTimeOn + 1;
         }
     }
 
@@ -79,7 +80,7 @@ void EncederBoilerCmd::down() {
     } else {
         if (model->boilerOn == false && model->howTimeOn > 0) {
 
-            model->howTimeOn = model->howTimeOn - 20;
+            model->howTimeOn = model->howTimeOn - 1;
         }
 
     }
