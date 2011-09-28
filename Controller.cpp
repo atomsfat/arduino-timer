@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   Controller.cpp
  * Author: atoms
- * 
+ *
  * Created on April 4, 2010, 12:10 PM
  */
 
@@ -41,7 +41,7 @@ void Controller::pressCancel() {
 
 void Controller::display(char msg[]) {
 
-
+	//this->processCommand();
     current->display(msg);
 }
 
@@ -92,3 +92,13 @@ void Controller::goHome() {
     this->getCommand(0);
 
 }
+
+void Controller::processCommand(){
+
+     if((model->current.unixtime()) > (model->current.unixtime()+ (model->howTimeOn*60) )){
+
+    	 model->boilerOn = false;
+
+     }
+}
+

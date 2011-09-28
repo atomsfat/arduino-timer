@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Model.h
  * Author: atoms
  *
@@ -7,6 +7,8 @@
 
 #ifndef _MODEL_H
 #define	_MODEL_H
+#include <Wire.h>
+#include "RTClib.h"
 
 
 class Model {
@@ -18,20 +20,21 @@ public:
 
      //variables
     int *hora;
+    DateTime current;
 
 
     bool boilerOn;
     int howTimeOn;
     int whenItStarted;
 
-    
 
-    
- 
+
+
+
 
 private:
 
-   
+
 };
 
 #endif	/* _MODEL_H */

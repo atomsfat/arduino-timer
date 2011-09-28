@@ -1,5 +1,9 @@
 #include <WProgram.h>
+
+//#include <Wire.h>
 #include <stdlib.h>
+
+
 //http://tushev.org/articles/electronics/48-arduino-and-watchdog-timer
 //http://blog.bricogeek.com/noticias/arduino/como-utilizar-watchdog-con-arduino/
 //watch dog
@@ -10,6 +14,10 @@
 
 #include "Controller.h"
 #include "Model.h"
+
+
+//ds1307 library
+//#include "RTClib.h"
 
 // prototypes
 void * operator new(size_t size);
@@ -56,17 +64,17 @@ extern "C" void __cxa_pure_virtual() {
 
 //Here my program start
 
-int rtc[7]; //this is for store the hour
+int rtc2[7]; //this is for store the hour
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 
-Model* model = new Model( rtc);
+Model* model = new Model( rtc2);
 Controller controller(model);
 
 Servo myservo;
 
-char message[40] = "Hola mundo";
+char message[40] = "";
 
 // constants won't change. They're used here to
 // set pin numbers:
@@ -82,6 +90,9 @@ const int buttonCancel = 6;
 int minServo = 5; //
 int maxServo = 180;
 
+//
+RTC_DS1307 RTC;
+
 void setup() {
 	wdt_disable();
 	// initialize the pushbutton as input
@@ -89,6 +100,17 @@ void setup() {
 	pinMode(buttonUp, INPUT);
 	pinMode(buttonOk, INPUT);
 	pinMode(buttonCancel, INPUT);
+
+
+    Wire.begin();
+    RTC.begin();
+
+	   if (! RTC.isrunning()) {
+	    Serial.println("RTC is NOT running!");
+    // following line sets the RTC to the date & time this sketch was compiled
+	    RTC.adjust(DateTime(__DATE__, __TIME__));
+      }
+
 
 	//this because the default home is no always the same for lcds
 
@@ -108,8 +130,11 @@ void loop()
 {
 
 	wdt_reset();
-	// read the state of the pushbutton
 
+	model->current =  RTC.now();
+
+
+	// read the state of the pushbutton
 	if (digitalRead(buttonDown)) {
 		controller.pressDown();
 

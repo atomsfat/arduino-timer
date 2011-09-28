@@ -1,11 +1,14 @@
-/* 
+/*
  * File:   Model.cpp
  * Author: atoms
- * 
+ *
  * Created on March 8, 2010, 11:28 PM
  */
 
 #include "Model.h"
+
+
+
 
 
 Model::Model(int *hora) {
@@ -16,7 +19,7 @@ Model::Model(int *hora) {
 
 
 
-  
+
 }
 
 Model::~Model() {

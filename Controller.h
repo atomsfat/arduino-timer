@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Controller.h
  * Author: atoms
  *
@@ -28,6 +28,7 @@ public:
     void goX(bool right);
     void getCommand(int i);
     void goHome();
+    void processCommand();
 
 private:
     Command* current;
