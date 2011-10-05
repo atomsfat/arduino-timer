@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   HomeCmd.cpp
  * Author: atoms
- * 
+ *
  * Created on April 2, 2010, 11:39 AM
  */
 
@@ -40,19 +40,20 @@ void HomeCmd::display(char msg[]) {
     char integer_string_howTimeOn[4];
 
 
-    sprintf(integer_string_howTimeOn, "%d", model->howTimeOn);
+    int timeOn = (model->whenToturnOff-model->current);
+    sprintf(integer_string_howTimeOn, "%d", timeOn);
 
     //Limpia string
-    strcpy(msg, "");
+    strcpy(git, "");
 
 
     if (model->boilerOn) {
 
         strcat(msg, "Boiler encedido   por: ");
         strcat(msg, integer_string_howTimeOn);
-        strcat(msg, " min");
+        strcat(msg, " seg");
 
-       
+
     } else {
         strcat(msg, " Boiler apagado");
 

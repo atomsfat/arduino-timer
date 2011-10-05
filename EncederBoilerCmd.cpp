@@ -33,6 +33,7 @@ void EncederBoilerCmd::ok() {
 
             model->boilerOn = true;
             model->whenItStarted = model->current;
+            model->whenToturnOff = model->current + (model->howTimeOn*60);
             controller->goHome();
         }
 

@@ -95,6 +95,7 @@ int maxServo = 180;
 
 //
 RTC_DS1307 RTC;
+DateTime current;
 
 void setup() {
 	wdt_disable();
@@ -134,8 +135,8 @@ void loop()
 
 	wdt_reset();
 
-	DateTime d = RTC.now();
-	model->current =  d.unixtime();
+	 current = RTC.now();
+	model->current =  current.unixtime();
 
 
 	// read the state of the pushbutton
@@ -172,7 +173,7 @@ void loop()
 
 	  if( strlen(message) <= 17){
 		  lcd.setCursor(4,1);
-		  DateTime dt7 (model->current );
+
 
 		    //lcd.print(dt7.year(), DEC);
 		  //lcd.print('/');
@@ -182,11 +183,11 @@ void loop()
 		  // lcd.print(' ');
 
 
-		    lcd.print(dt7.hour(), DEC);
+		    lcd.print(current.hour(), DEC);
 		    lcd.print(':');
-		    lcd.print(dt7.minute(), DEC);
+		    lcd.print(current.minute(), DEC);
 		    lcd.print(':');
-		    lcd.print(dt7.second(), DEC);
+		    lcd.print(current.second(), DEC);
 
 
 
@@ -194,7 +195,7 @@ void loop()
 
 
 
-	delay(100);
+	delay(500);
 
 
 }

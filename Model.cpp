@@ -15,7 +15,8 @@ Model::Model(int *hora) {
     this->hora = hora;
     this->boilerOn = false;
     this->howTimeOn = 0;
-    this->whenItStarted=0;
+    this->whenToturnOff=0;
+
 
 
 

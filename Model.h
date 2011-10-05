@@ -24,6 +24,7 @@ public:
     bool boilerOn;
     int howTimeOn;
     uint32_t whenItStarted;
+    uint32_t whenToturnOff;
 
 
 

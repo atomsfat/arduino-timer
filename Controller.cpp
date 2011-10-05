@@ -102,13 +102,11 @@ void Controller::processCommand(){
 //     }
 
      if(model->boilerOn){
-		 if(model->howTimeOn>0){
-		 model->howTimeOn = model->howTimeOn - ((model->current - model->whenItStarted)/60);
+		 if(model->whenToturnOff<model->current){
+			 model->boilerOn=false;
 		 }
 
-		 if(model->howTimeOn < 0){
-			 model->howTimeOn = 0;
-		 }
+
 
      }
 
