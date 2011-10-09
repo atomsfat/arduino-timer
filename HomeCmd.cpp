@@ -44,7 +44,7 @@ void HomeCmd::display(char msg[]) {
     sprintf(integer_string_howTimeOn, "%d", timeOn);
 
     //Limpia string
-    strcpy(git, "");
+    strcpy(msg, "");
 
 
     if (model->boilerOn) {

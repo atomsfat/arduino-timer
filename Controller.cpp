@@ -80,10 +80,10 @@ void Controller::getCommand(int i) {
 
         case 1:
 
-            delete(current);
+        	 delete(current);
 
-            current = new EncederBoilerCmd(model, this);
-            break;
+              current = new EncederBoilerCmd(model, this);
+           break;
     }
 }
 
