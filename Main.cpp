@@ -2,12 +2,18 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
+#include <vector>
 
 #include <stdio.h>
 #include <string.h>
 
+
 #include "Controller.h"
 #include "Model.h"
+#include "Command.h"
+#include "HomeCmd.h"
+#include "EncederBoilerCmd.h"
+
 
 using namespace std;
 int rtc2[7]; //this is for store the hour
@@ -34,7 +40,29 @@ int option;
 
 
 time_t seconds;
+
 void setup() {
+
+
+	HomeCmd h(model, &controller);
+	EncederBoilerCmd e(model, &controller);
+
+	e.cancel();
+	//e.display(message);
+	//e.up();
+	//e.down();
+
+
+	//commands.push_back(&e);
+	controller.commands.push_back(&e);
+
+
+
+	controller.commands.push_back(&h);
+
+	controller.commands.at(0)->display(message);
+
+	cout << "count " << controller.commands.size() << "\n";
 
 }
 
@@ -70,13 +98,15 @@ void loop()
 
 	}
 
+	cout << "data--->" ;
+
 	controller.display(message);
 
 
-	//cout << message << "\n";
 
 
-	for(int i=0; i< strlen(message); i++){
+
+	for(uint i=0; i< strlen(message); i++){
 
 		            if((i+1)%17==0){
 		            	 cout  << "\n";
@@ -87,27 +117,7 @@ void loop()
 
 
 	cout << "\n";
-//
-//	if (strlen(message) <= 17) {
-//		lcd.setCursor(4, 1);
-//
-//		//lcd.print(dt7.year(), DEC);
-//		//lcd.print('/');
-//		// lcd.print(dt7.month(), DEC);
-//		// lcd.print('/');
-//		// lcd.print(dt7.day(), DEC);
-//		// lcd.print(' ');
-//
-//
-//		lcd.print(current.hour(), DEC);
-//		lcd.print(':');
-//		lcd.print(current.minute(), DEC);
-//		lcd.print(':');
-//		lcd.print(current.second(), DEC);
-//
-//	}
 
-	//delay(500);
 
 }
 

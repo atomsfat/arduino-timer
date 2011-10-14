@@ -4,16 +4,19 @@
  *
  * Created on April 4, 2010, 12:10 PM
  */
+#include <stdlib.h>
+#include <iostream>
 
 #include "Controller.h"
 #include "HomeCmd.h"
+#include "Command.h"
 #include "EncederBoilerCmd.h"
-#include <stdlib.h>
 
+using namespace std;
 Controller::Controller(Model* model) {
-    this->model = model;
-    this->x = 0;
-    this->current = new HomeCmd(model, this);
+	this->model = model;
+	this->x = 0;
+	this->current = 0;
 
 }
 
@@ -24,91 +27,95 @@ Controller::~Controller() {
 }
 
 void Controller::pressOk() {
-    current->ok();
+	cout << " ctrl ok \n";
+	commands.at(current)->ok();
 }
 
 void Controller::pressUp() {
-    current->up();
+	cout << " ctrl up \n";
+	commands.at(current)->up();
 }
 
 void Controller::pressDown() {
-    current->down();
+	cout << " ctrl down \n";
+	commands.at(current)->down();
 }
 
 void Controller::pressCancel() {
-    current->cancel();
+	cout << " ctrl cancel \n";
+	commands.at(current)->cancel();
 }
 
 void Controller::display(char msg[]) {
+	cout << " ctrl display \n";
+	cout << " current: " << current << "\n";
+	//this->processCommand();
 
-	this->processCommand();
-    current->display(msg);
+	commands.at(1)->display(msg);
+	cout << " ************* \n";
+
 }
 
 void Controller::goX(bool right) {
 
-    if (right) {
-        if (x < 1) {
-            x++;
-        } else {
-            x = 0;
-        }
+	cout << " goX " << " \n";
+	if (right) {
+		if (x < 1) {
+			x++;
+		} else {
+			x = 0;
+		}
 
-    } else {
+	} else {
 
-        if (x > 0) {
-            x--;
-        } else {
-            x = 1;
-        }
-    }
+		if (x > 0) {
+			x--;
+		} else {
+			x = 1;
+		}
+	}
 
-    this->getCommand(x);
+	this->getCommand(x);
 
 }
 
 void Controller::getCommand(int i) {
 
-    //   using namespace std;
-    switch (i) {
+	cout << " size getCommand " << i <<  " commands.size() " << commands.size() << " \n";
+	switch (i) {
 
-        case 0:
-            delete(current);
+	case 0:
 
-            current = new HomeCmd(model, this);
-            break;
+		current = 0;
+		break;
 
-        case 1:
+	case 1:
 
-        	 delete(current);
-
-              current = new EncederBoilerCmd(model, this);
-           break;
-    }
+		current = 1;
+		break;
+	}
 }
 
 void Controller::goHome() {
 
-    this->getCommand(0);
+	this->getCommand(0);
 
 }
 
-void Controller::processCommand(){
+void Controller::processCommand() {
 
-    // if((model->current) > (model->whenItStarted+(model->howTimeOn*60) )){
+//	if ((model->current) > (model->whenItStarted + (model->howTimeOn * 60))) {
+//
+//		model->boilerOn = false;
+//
+//	}
 
-    	// model->boilerOn = false;
+	if (model->boilerOn) {
+		if (model->whenToturnOff < model->current) {
+			model->boilerOn = false;
+		}
 
-//     }
-
-     if(model->boilerOn){
-		 if(model->whenToturnOff<model->current){
-			 model->boilerOn=false;
-		 }
-
-
-
-     }
+	}
 
 }
 

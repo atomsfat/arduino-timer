@@ -4,39 +4,45 @@
  *
  * Created on April 2, 2010, 11:39 AM
  */
-
-#include "HomeCmd.h"
+#include <iostream>
 #include <string.h>
 #include <stdio.h>
+#include "HomeCmd.h"
+
 
 HomeCmd::HomeCmd(Model* model, Controller* controller) {
 
     this->model = model;
     this->controller = controller;
+    std::cout << " constructor2 "<< this->controller << " "<<this->model <<"\n";
 }
 
 HomeCmd::~HomeCmd() {
 }
 
 void HomeCmd::ok() {
+	std::cout << " ok homeCmd \n";
 }
 
 void HomeCmd::cancel() {
-
+	std::cout << " cancel homeCmd \n";
 }
 
 void HomeCmd::up() {
+	std::cout << " up homeCmd \n";
     controller->goX(false);
 
 }
 
 void HomeCmd::down() {
+	std::cout << " down homeCmd \n";
     controller->goX(true);
 }
 
 void HomeCmd::display(char msg[]) {
 
 
+	std::cout << " display homeCmd \n";
     char integer_string_howTimeOn[4];
 
 
