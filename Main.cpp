@@ -44,25 +44,21 @@ time_t seconds;
 void setup() {
 
 
-	HomeCmd h(model, &controller);
-	EncederBoilerCmd e(model, &controller);
 
-	e.cancel();
-	//e.display(message);
-	//e.up();
-	//e.down();
+	//any object placed in such a list must be allocated from the heap
+	//When the list is destructed, it will leave all of its referenced
+	//objects on the heap without calling their destructors or deallocating their memory.
 
-
-	//commands.push_back(&e);
-	controller.commands.push_back(&e);
+	controller.commands.push_back(new HomeCmd(model, &controller));
+	controller.commands.push_back(new EncederBoilerCmd(model, &controller));
 
 
-
-	controller.commands.push_back(&h);
+	cout << "controller.commands.at(0)->" << controller.commands.at(0)<< "\n";
 
 	controller.commands.at(0)->display(message);
+	controller.commands.at(1)->display(message);
 
-	cout << "count " << controller.commands.size() << "\n";
+	cout << "commands size " << controller.commands.size() << "\n";
 
 }
 
@@ -74,9 +70,9 @@ void loop()
 
 	seconds = time(NULL);
 
-	model->current = seconds;
+	model->currentTime = seconds;
 
-	cout << model->current << "\n" ;
+	cout << model->currentTime << "\n" ;
 
 	// read the state of the pushbutton
 	if (option == 1) {

@@ -27,38 +27,38 @@ Controller::~Controller() {
 }
 
 void Controller::pressOk() {
-	cout << " ctrl ok \n";
+
 	commands.at(current)->ok();
 }
 
 void Controller::pressUp() {
-	cout << " ctrl up \n";
+
 	commands.at(current)->up();
 }
 
 void Controller::pressDown() {
-	cout << " ctrl down \n";
+
 	commands.at(current)->down();
 }
 
 void Controller::pressCancel() {
-	cout << " ctrl cancel \n";
+
 	commands.at(current)->cancel();
 }
 
 void Controller::display(char msg[]) {
-	cout << " ctrl display \n";
-	cout << " current: " << current << "\n";
-	//this->processCommand();
 
-	commands.at(1)->display(msg);
+	cout << " current: " << current << "\n";
+	// this->processCommand();
+
+	commands.at(current)->display(msg);
 	cout << " ************* \n";
 
 }
 
 void Controller::goX(bool right) {
 
-	cout << " goX " << " \n";
+
 	if (right) {
 		if (x < 1) {
 			x++;
@@ -81,7 +81,7 @@ void Controller::goX(bool right) {
 
 void Controller::getCommand(int i) {
 
-	cout << " size getCommand " << i <<  " commands.size() " << commands.size() << " \n";
+
 	switch (i) {
 
 	case 0:
@@ -111,7 +111,7 @@ void Controller::processCommand() {
 //	}
 
 	if (model->boilerOn) {
-		if (model->whenToturnOff < model->current) {
+		if (model->whenToturnOff < model->currentTime) {
 			model->boilerOn = false;
 		}
 

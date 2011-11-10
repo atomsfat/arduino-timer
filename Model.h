@@ -19,7 +19,7 @@ public:
 
      //variables
     int *hora;
-    uint32_t current;
+    uint32_t currentTime;
 
     bool boilerOn;
     int howTimeOn;

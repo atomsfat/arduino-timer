@@ -36,20 +36,20 @@ void HomeCmd::up() {
 
 void HomeCmd::down() {
 	std::cout << " down homeCmd \n";
-    controller->goX(true);
+ //   controller->goX(true);
 }
 
 void HomeCmd::display(char msg[]) {
 
 
 	std::cout << " display homeCmd \n";
-    char integer_string_howTimeOn[4];
+    char integer_string_howTimeOn[20];
 
 
-    int timeOn = (model->whenToturnOff-model->current);
-    sprintf(integer_string_howTimeOn, "%d", timeOn);
+    int timeOn = (model->whenToturnOff-model->currentTime);
+    //sprintf(integer_string_howTimeOn, "%d", timeOn);
 
-    //Limpia string
+   // Limpia string
     strcpy(msg, "");
 
 

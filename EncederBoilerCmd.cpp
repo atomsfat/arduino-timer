@@ -23,24 +23,24 @@ EncederBoilerCmd::~EncederBoilerCmd() {
 
 void EncederBoilerCmd::ok() {
 
-	std::cout << " ok EncederBoilerCmd ";
+	std::cout << " ok EncederBoilerCmd \n";
 }
 
 void EncederBoilerCmd::cancel() {
 
-	std::cout << " cancel EncederBoilerCmd ";
+	std::cout << " cancel EncederBoilerCmd \n";
 }
 
 void EncederBoilerCmd::up() {
 
-	std::cout << " up EncederBoilerCmd ";
+	std::cout << " up EncederBoilerCmd \n";
 
 }
 
 void EncederBoilerCmd::down() {
 
 
-	std::cout << " down EncederBoilerCmd ";
+	std::cout << " down EncederBoilerCmd \n";
 
 }
 
