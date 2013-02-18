@@ -1,0 +1,10 @@
+For debian and ubuntu install
+apt-get install avrdude binutils-avr gcc-avr avr-libc gdb-avr 
+Install eclipse-cpp
+Import as project as
+File>Project>Makefile with existing source
+Install arduino-022
+Change the following in the Makefile 
+ARDUINO_PATH 
+AVRDUDE_PORT
+AVR_TOOLS_PATH

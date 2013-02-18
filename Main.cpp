@@ -1,26 +1,13 @@
-#include <WProgram.h>
-
-//#include <Wire.h>
-#include <stdlib.h>
-
-#include <Wire.h>
-#include "RTClib.h"
-
-
-//http://tushev.org/articles/electronics/48-arduino-and-watchdog-timer
-//http://blog.bricogeek.com/noticias/arduino/como-utilizar-watchdog-con-arduino/
-//watch dog
-#include <avr/wdt.h>
+#include "WProgram.h"
 
 #include "LiquidCrystal.h"
-#include "Servo.h"
+#include <Wire.h>
+
+#include <stdlib.h>
+#include <RTClib.h>
 
 #include "Controller.h"
 #include "Model.h"
-
-
-//ds1307 library
-//#include "RTClib.h"
 
 // prototypes
 void * operator new(size_t size);
@@ -38,19 +25,19 @@ void loop();
 
 //this enable new operator
 void * operator new(size_t size) {
-	return malloc(size);
+  return malloc(size);
 }
 //this enable delete operator
 void operator delete(void * ptr) {
-	free(ptr);
+  free(ptr);
 }
 
 int __cxa_guard_acquire(__guard *g) {
-	return !*(char *) (g);
+  return !*(char *) (g);
 }
 ;
 void __cxa_guard_release(__guard *g) {
-	*(char *) g = 1;
+  *(char *) g = 1;
 }
 ;
 void __cxa_guard_abort(__guard *) {
@@ -58,24 +45,18 @@ void __cxa_guard_abort(__guard *) {
 ;
 
 extern "C" void __cxa_pure_virtual() {
-	cli();
-	for (;;)
-		;
+  cli();
+  for (;;)
+    ;
 }
-
-
 
 //Here my program start
 
-int rtc2[7]; //this is for store the hour
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
-
-Model* model = new Model( rtc2);
+Model* model = new Model();
 Controller controller(model);
-
-Servo myservo;
 
 char message[40] = "";
 
@@ -89,124 +70,88 @@ const int buttonCancel = 6;
 
 
 
-// variables will change:
-int minServo = 5; //
-int maxServo = 180;
-
-//
 RTC_DS1307 RTC;
 DateTime current;
 
 void setup() {
-	wdt_disable();
-	// initialize the pushbutton as input
-	pinMode(buttonDown, INPUT);
-	pinMode(buttonUp, INPUT);
-	pinMode(buttonOk, INPUT);
-	pinMode(buttonCancel, INPUT);
+  // initialize the pushbutton as input
+  pinMode(buttonDown, INPUT);
+  pinMode(buttonUp, INPUT);
+  pinMode(buttonOk, INPUT);
+  pinMode(buttonCancel, INPUT);
 
-
-    Wire.begin();
-    RTC.begin();
-
-	   if (! RTC.isrunning()) {
-	    Serial.println("RTC is NOT running!");
-    // following line sets the RTC to the date & time this sketch was compiled
-	    RTC.adjust(DateTime(__DATE__, __TIME__));
-      }
-
-
-	//this because the default home is no always the same for lcds
-
-
-	myservo.attach(10);  //set servo to pin 10
-	lcd.begin(1, 2);    // configure lcd
-	//controller.display(hola);
-
-	wdt_enable(WDTO_2S);
-
+  Wire.begin();
+  RTC.begin();
+  // configure display
+  lcd.begin(1, 2);
 }
-
-
 
 void loop()
 
 {
+  current = RTC.now();
+  model->current =  current.unixtime();
 
-	wdt_reset();
+  // read the state of the pushbutton
+  if (digitalRead(buttonDown) == 1) {
+    controller.pressDown();
+  } else if (digitalRead(buttonUp) == 1) {
+    controller.pressUp();
+  } else if (digitalRead(buttonOk) == 1) {
+    controller.pressOk();
+  } else if (digitalRead(buttonCancel) == 1) {
+    controller.pressCancel();
+  }
 
-	 current = RTC.now();
-	model->current =  current.unixtime();
+  if (model->boilerOn) {
+    //myservo.write(maxServo);
+  } else {
+    //myservo.write(minServo);
+  }
 
+  controller.display(message);
 
-	// read the state of the pushbutton
-	if (digitalRead(buttonDown)) {
-		controller.pressDown();
+  lcd.clear();
+  lcd.setCursor(4, 0);
 
-	} else if (digitalRead(buttonUp) == 1) {
-		controller.pressUp();
-	} else if (digitalRead(buttonOk) == 1) {
-		controller.pressOk();
-	} else if (digitalRead(buttonCancel) == 1) {
-		controller.pressCancel();
-	}
+  for (int i = 0; i < strlen(message); i++) {
 
-	if(model->boilerOn){
-		myservo.write(maxServo);
-	}else{
-		myservo.write(minServo);
-	}
+    if ((i + 1) % 17 == 0) {
+      lcd.setCursor(4, 1);
+    }
+    lcd.print(message[i]);
 
-	 controller.display(message);
+  }
 
-	 lcd.clear();
-	 lcd.setCursor(4,0);
+  if (strlen(message) <= 17) {
+    lcd.setCursor(4, 1);
 
-	  for(int i=0; i< strlen(message); i++){
+    //lcd.print(dt7.year(), DEC);
+    //lcd.print('/');
+    // lcd.print(dt7.month(), DEC);
+    // lcd.print('/');
+    // lcd.print(dt7.day(), DEC);
+    // lcd.print(' ');
 
-	            if((i+1)%17==0){
-	                 lcd.setCursor(4,1);
-	            }
-	            lcd.print(message[i]);
+    lcd.print(current.hour(), DEC);
+    lcd.print(':');
+    lcd.print(current.minute(), DEC);
+    lcd.print(':');
+    lcd.print(current.second(), DEC);
 
-	        }
+  }
 
-	  if( strlen(message) <= 17){
-		  lcd.setCursor(4,1);
-
-
-		    //lcd.print(dt7.year(), DEC);
-		  //lcd.print('/');
-		  // lcd.print(dt7.month(), DEC);
-		  // lcd.print('/');
-		  // lcd.print(dt7.day(), DEC);
-		  // lcd.print(' ');
-
-
-		    lcd.print(current.hour(), DEC);
-		    lcd.print(':');
-		    lcd.print(current.minute(), DEC);
-		    lcd.print(':');
-		    lcd.print(current.second(), DEC);
-
-
-
-	  }
-
-
-
-	delay(500);
-
+  delay(500);
 
 }
 
 int main(void) {
-	init();
+  init();
 
-	setup();
+  setup();
 
-	for (;;)
-		loop();
+  for (;;)
+    loop();
 
-	return 0;
+  return 0;
 }

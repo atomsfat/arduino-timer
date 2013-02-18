@@ -11,8 +11,8 @@
 
 HomeCmd::HomeCmd(Model* model, Controller* controller) {
 
-    this->model = model;
-    this->controller = controller;
+  this->model = model;
+  this->controller = controller;
 }
 
 HomeCmd::~HomeCmd() {
@@ -26,36 +26,32 @@ void HomeCmd::cancel() {
 }
 
 void HomeCmd::up() {
-    controller->goX(false);
+  controller->goX(false);
 
 }
 
 void HomeCmd::down() {
-    controller->goX(true);
+  controller->goX(true);
 }
 
 void HomeCmd::display(char msg[]) {
 
+  char integer_string_howTimeOn[4];
 
-    char integer_string_howTimeOn[4];
+  int timeOn = (model->whenToturnOff - model->current);
+  sprintf(integer_string_howTimeOn, "%d", timeOn);
 
+  //Limpia string
+  strcpy(msg, "");
 
-    int timeOn = (model->whenToturnOff-model->current);
-    sprintf(integer_string_howTimeOn, "%d", timeOn);
+  if (model->boilerOn) {
 
-    //Limpia string
-    strcpy(git, "");
+    strcat(msg, "Boiler encedido   por: ");
+    strcat(msg, integer_string_howTimeOn);
+    strcat(msg, " seg");
 
+  } else {
+    strcat(msg, " Boiler apagado");
 
-    if (model->boilerOn) {
-
-        strcat(msg, "Boiler encedido   por: ");
-        strcat(msg, integer_string_howTimeOn);
-        strcat(msg, " seg");
-
-
-    } else {
-        strcat(msg, " Boiler apagado");
-
-    }
+  }
 }

@@ -11,9 +11,9 @@
 #include <stdlib.h>
 
 Controller::Controller(Model* model) {
-    this->model = model;
-    this->x = 0;
-    this->current = new HomeCmd(model, this);
+  this->model = model;
+  this->x = 0;
+  this->current = new HomeCmd(model, this);
 
 }
 
@@ -24,91 +24,89 @@ Controller::~Controller() {
 }
 
 void Controller::pressOk() {
-    current->ok();
+  current->ok();
 }
 
 void Controller::pressUp() {
-    current->up();
+  current->up();
 }
 
 void Controller::pressDown() {
-    current->down();
+  current->down();
 }
 
 void Controller::pressCancel() {
-    current->cancel();
+  current->cancel();
 }
 
 void Controller::display(char msg[]) {
 
-	this->processCommand();
-    current->display(msg);
+  this->processCommand();
+  current->display(msg);
 }
 
 void Controller::goX(bool right) {
 
-    if (right) {
-        if (x < 1) {
-            x++;
-        } else {
-            x = 0;
-        }
-
+  if (right) {
+    if (x < 1) {
+      x++;
     } else {
-
-        if (x > 0) {
-            x--;
-        } else {
-            x = 1;
-        }
+      x = 0;
     }
 
-    this->getCommand(x);
+  } else {
+
+    if (x > 0) {
+      x--;
+    } else {
+      x = 1;
+    }
+  }
+
+  this->getCommand(x);
 
 }
 
 void Controller::getCommand(int i) {
 
-    //   using namespace std;
-    switch (i) {
+  //   using namespace std;
+  switch (i) {
 
-        case 0:
-            delete(current);
+  case 0:
+    delete (current);
 
-            current = new HomeCmd(model, this);
-            break;
+    current = new HomeCmd(model, this);
+    break;
 
-        case 1:
+  case 1:
 
-            delete(current);
+    delete (current);
 
-            current = new EncederBoilerCmd(model, this);
-            break;
-    }
+    current = new EncederBoilerCmd(model, this);
+    break;
+  }
 }
 
 void Controller::goHome() {
 
-    this->getCommand(0);
+  this->getCommand(0);
 
 }
 
-void Controller::processCommand(){
+void Controller::processCommand() {
 
-    // if((model->current) > (model->whenItStarted+(model->howTimeOn*60) )){
+  // if((model->current) > (model->whenItStarted+(model->howTimeOn*60) )){
 
-    	// model->boilerOn = false;
+  // model->boilerOn = false;
 
 //     }
 
-     if(model->boilerOn){
-		 if(model->whenToturnOff<model->current){
-			 model->boilerOn=false;
-		 }
+  if (model->boilerOn) {
+    if (model->whenToturnOff < model->current) {
+      model->boilerOn = false;
+    }
 
-
-
-     }
+  }
 
 }
 

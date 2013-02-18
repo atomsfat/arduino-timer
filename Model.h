@@ -9,30 +9,23 @@
 #define	_MODEL_H
 #include <inttypes.h>
 
-
 class Model {
 public:
-    //contructor
-    Model(int *hora);
-    //destructor
-    virtual ~Model();
+  //contructor
+  Model();
+  //destructor
+  virtual ~Model();
 
-     //variables
-    int *hora;
-    uint32_t current;
+  //variables
+  int *hora;
+  uint32_t current;
 
-    bool boilerOn;
-    int howTimeOn;
-    uint32_t whenItStarted;
-    uint32_t whenToturnOff;
-
-
-
-
-
+  bool boilerOn;
+  int howTimeOn;
+  uint32_t whenItStarted;
+  uint32_t whenToturnOff;
 
 private:
-
 
 };
 

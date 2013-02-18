@@ -7,27 +7,13 @@
 
 #include "Model.h"
 
-
-
-
-
-Model::Model(int *hora) {
-    this->hora = hora;
-    this->boilerOn = false;
-    this->howTimeOn = 0;
-    this->whenToturnOff=0;
-
-
-
-
-
+Model::Model() {
+ // this->hora = hora;
+  this->boilerOn = false;
+  this->howTimeOn = 0;
+  this->whenToturnOff = 0;
 }
 
 Model::~Model() {
 }
-
-
-
-
-
 

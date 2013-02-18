@@ -9,22 +9,19 @@
 #define	_HOMECMD_H
 #include "Command.h"
 
-
-class HomeCmd : public Command {
+class HomeCmd: public Command {
 private:
 
 public:
-    HomeCmd(Model* model,  Controller* controller);
+  HomeCmd(Model* model, Controller* controller);
 
-    virtual ~HomeCmd();
+  virtual ~HomeCmd();
 
-
-    void ok();
-    void cancel();
-    void up();
-    void down();
-    void display(char msg[]);
-
+  void ok();
+  void cancel();
+  void up();
+  void down();
+  void display(char msg[]);
 
 };
 
