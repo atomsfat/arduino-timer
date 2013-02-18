@@ -66,7 +66,7 @@ const int buttonUp = 8;
 const int buttonDown = 9;
 
 const int buttonOk = 7;
-const int buttonCancel = 6;
+const int buttonCancel = 10;
 
 
 
