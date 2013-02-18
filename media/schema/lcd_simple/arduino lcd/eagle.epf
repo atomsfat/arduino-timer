@@ -1,0 +1,37 @@
+[Eagle]
+Version="06 02 00"
+Platform="Linux"
+Serial="62191E841E-LSR-WLM-1EL"
+Globals="Globals"
+Desktop="Desktop"
+
+[Globals]
+AutoSaveProject=1
+UsedLibrary="/home/atomsfat/bin/eagle-6.2.0/lbr/adafruit-Adafruit-Eagle-Library-81ea27c/adafruit.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Connectors.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-AnalogIC.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-DigitalIC.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Passives.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-DiscreteSemi.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Capacitors.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Boards.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Aesthetics.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/LilyPad-Wearables.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Displays.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Electromechanical.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-FreqCtrl.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Sensors.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-RF.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-Resistors.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-PowerIC.lbr"
+UsedLibrary="/home/atomsfat/bin/SparkFun-Eagle-Libraries/SparkFun-LED.lbr"
+
+[Win_1]
+Type="Control Panel"
+Loc="220 173 819 572"
+State=1
+Number=0
+
+[Desktop]
+Screen="1360 1368"
+Window="Win_1"
