@@ -9,6 +9,8 @@
 #include "Controller.h"
 #include "Model.h"
 
+#include "Servo.h"
+
 // prototypes
 void * operator new(size_t size);
 void operator delete(void * ptr);
@@ -51,7 +53,10 @@ extern "C" void __cxa_pure_virtual() {
 }
 
 //Here my program start
-
+Servo myservo;
+// variables will change:
+int minServo = 5; //
+int maxServo = 180;
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
@@ -84,6 +89,8 @@ void setup() {
   RTC.begin();
   // configure display
   lcd.begin(1, 2);
+
+  myservo.attach(6);  //set servo to pin 10
 }
 
 void loop()
@@ -104,9 +111,9 @@ void loop()
   }
 
   if (model->boilerOn) {
-    //myservo.write(maxServo);
+    myservo.write(maxServo);
   } else {
-    //myservo.write(minServo);
+    myservo.write(minServo);
   }
 
   controller.display(message);
