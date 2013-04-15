@@ -223,7 +223,6 @@ $(TMPDIRPATH)%.cpp: %.pde
 all: tmpdir $(HEXNAME) assemblersource showsize
 	ls -al $(HEXNAME) $(ELFNAME)
 
-$(warning A top-level warning)
 $(ELFNAME): $(LIBNAME)($(addprefix $(TMPDIRPATH),$(OBJFILES))) 
 	$(LINK.o) $(COMMON_FLAGS) $(LIBNAME) $(LOADLIBES) $(LDLIBS) -o $@
 
