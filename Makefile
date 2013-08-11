@@ -36,7 +36,7 @@
 #	mega		Arduino Mega
 #	mini			Arduino Mini
 #	lilypad328	LilyPad Arduino w/ ATmega328  
-BOARD:=atmega328
+BOARD:=atmega168
 
 # additional (comma separated) defines 
 # -DDOGM128_HW		board is connected to DOGM128 display

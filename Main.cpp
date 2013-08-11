@@ -56,7 +56,7 @@ extern "C" void __cxa_pure_virtual() {
 Servo myservo;
 // variables will change:
 int minServo = 5; //
-int maxServo = 180;
+int maxServo = 175;
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
@@ -80,6 +80,9 @@ DateTime current;
 
 void setup() {
   // initialize the pushbutton as input
+  pinMode(13, OUTPUT);
+  digitalWrite(13, HIGH);
+
   pinMode(buttonDown, INPUT);
   pinMode(buttonUp, INPUT);
   pinMode(buttonOk, INPUT);
@@ -119,7 +122,7 @@ void loop()
   controller.display(message);
 
   lcd.clear();
-  lcd.setCursor(4, 0);
+ // lcd.setCursor(4, 0);
 
   for (int i = 0; i < strlen(message); i++) {
 
