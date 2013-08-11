@@ -36,7 +36,7 @@
 #	mega		Arduino Mega
 #	mini			Arduino Mini
 #	lilypad328	LilyPad Arduino w/ ATmega328  
-BOARD:=atmega168
+#BOARD:=atmega328
 
 # additional (comma separated) defines 
 # -DDOGM128_HW		board is connected to DOGM128 display
@@ -48,10 +48,10 @@ BOARD:=atmega168
 
 # The location where the avr tools (e.g. avr-gcc) are located. Requires a '/' at the end.
 # Can be empty if all tools are accessable through the search path
-AVR_TOOLS_PATH:=/usr/bin/
+#AVR_TOOLS_PATH:=/usr/bin/
 
 # Install path of the arduino software. Requires a '/' at the end.
-ARDUINO_PATH:=/home/atomsfat/java/arduino-0022/
+#ARDUINO_PATH:=/home/atomsfat/java/arduino-0022/
 
 # Install path for avrdude. Requires a '/' at the end. Can be empty if avrdude is in the search path.
 AVRDUDE_PATH:= 
@@ -59,14 +59,15 @@ AVRDUDE_PATH:=
 # The unix device where we can reach the arduino board
 # Uno: /dev/ttyACM0
 # Duemilanove: /dev/ttyUSB0
-AVRDUDE_PORT:=/dev/ttyUSB0
+#AVRDUDE_PORT:=/dev/ttyUSB0
+
+# ARDUINOCONST The Arduino software version, as an integer, used to define the
+#              ARDUINO version constant.  This defaults to 100 if undefined.
+# default arduino version
+ARDUINOCONST ?= 100
 
 # List of all libaries which should be included.
-EXTRA_DIRS=$(ARDUINO_PATH)libraries/LiquidCrystal/
-EXTRA_DIRS+=$(ARDUINO_PATH)libraries/Servo/
-EXTRA_DIRS+=$(ARDUINO_PATH)libraries/RTClib/
-EXTRA_DIRS+=$(ARDUINO_PATH)libraries/Wire/
-EXTRA_DIRS+=$(ARDUINO_PATH)libraries/Wire/utility/
+
 #EXTRA_DIRS+=$(ARDUINO_PATH)libraries/Dogm/
 #EXTRA_DIRS+=/home/kraus/src/arduino/dogm128/hg/libraries/Dogm/
 
@@ -79,6 +80,8 @@ BOARDS_TXT:=$(ARDUINO_PATH)hardware/arduino/boards.txt
 MCU:=$(shell sed -n -e "s/$(BOARD).build.mcu=\(.*\)/\1/p" $(BOARDS_TXT))
 # get the F_CPU value from the $(BOARD).build.f_cpu variable. For the atmega328 board this is 16000000
 F_CPU:=$(shell sed -n -e "s/$(BOARD).build.f_cpu=\(.*\)/\1/p" $(BOARDS_TXT))
+# get variant
+BOARD_BUILD_VARIANT :=$(shell sed -n -e "s/$(BOARD).build.variant=\(.*\)/\1/p" $(BOARDS_TXT))
 
 # avrdude
 # get the AVRDUDE_UPLOAD_RATE value from the $(BOARD).upload.speed variable. For the atmega328 board this is 57600
@@ -150,12 +153,13 @@ AVRDUDE = avrdude
 # use "make -p -f/dev/null" to see the default rules and definitions
 
 # Build C and C++ flags. Include path information must be placed here
-COMMON_FLAGS = -DF_CPU=$(F_CPU) -mmcu=$(MCU) $(DEFS)
+COMMON_FLAGS = -DF_CPU=$(F_CPU) -mmcu=$(MCU) $(DEFS) -DARDUINO=$(ARDUINOCONST)
 # COMMON_FLAGS += -gdwarf-2
 COMMON_FLAGS += -Os
 COMMON_FLAGS += -Wall -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 COMMON_FLAGS += -I. 
 COMMON_FLAGS += -I$(ARDUINO_PATH)hardware/arduino/cores/arduino
+COMMON_FLAGS += -I$(ARDUINO_PATH)hardware/arduino/variants/$(BOARD_BUILD_VARIANT)/
 COMMON_FLAGS += $(addprefix -I,$(EXTRA_DIRS))
 COMMON_FLAGS += -ffunction-sections -fdata-sections -Wl,--gc-sections
 COMMON_FLAGS += -Wl,--relax
@@ -219,7 +223,6 @@ $(TMPDIRPATH)%.cpp: %.pde
 all: tmpdir $(HEXNAME) assemblersource showsize
 	ls -al $(HEXNAME) $(ELFNAME)
 
-
 $(ELFNAME): $(LIBNAME)($(addprefix $(TMPDIRPATH),$(OBJFILES))) 
 	$(LINK.o) $(COMMON_FLAGS) $(LIBNAME) $(LOADLIBES) $(LDLIBS) -o $@
 
@@ -263,7 +266,7 @@ upload: $(HEXNAME)
 # cd $(TMPDIRPATH); mkdir -p $(DIRS) 2> /dev/null; cd ..
 DEPACTION=test -d $(TMPDIRPATH) || mkdir $(TMPDIRPATH);\
 mkdir -p $(addprefix $(TMPDIRPATH),$(DIRS));\
-set -e; echo -n $@ $(dir $@) > $@; $(CC) -MM $(COMMON_FLAGS) $< >> $@
+set -e; printf $@ $(dir $@) > $@; $(CC) -MM $(COMMON_FLAGS) $< >> $@
 
 
 $(TMPDIRPATH)%.d: %.c
