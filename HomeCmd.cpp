@@ -38,8 +38,14 @@ void HomeCmd::display(char msg[]) {
 
   char integer_string_howTimeOn[4];
 
-  int timeOn = (model->whenToturnOff - model->current);
-  sprintf(integer_string_howTimeOn, "%d", timeOn);
+  if(model->current > model->whenToturnOff){
+    sprintf(integer_string_howTimeOn, "%d", 0);
+  }else{
+    int timeOn = (model->whenToturnOff - model->current);
+    sprintf(integer_string_howTimeOn, "%d", timeOn);
+  }
+
+
 
   //Limpia string
   strcpy(msg, "");

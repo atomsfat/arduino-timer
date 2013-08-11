@@ -125,13 +125,13 @@ void loop()
 
   controller.display(message);
 
-  lcd.clear();
- // lcd.setCursor(4, 0);
+//  lcd.clear();
+  lcd.setCursor(0, 0);
 
   for (int i = 0; i < strlen(message); i++) {
 
     if ((i + 1) % 17 == 0) {
-      lcd.setCursor(4, 1);
+      lcd.setCursor(0, 1);
     }
     lcd.print(message[i]);
 
@@ -155,7 +155,7 @@ void loop()
 
   }
 
-  delay(500);
+  delay(200);
 
 }
 
