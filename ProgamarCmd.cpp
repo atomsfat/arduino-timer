@@ -1,24 +1,24 @@
 /*
- * File:   EncederBoilerCmd.cpp
+ * File:   ProgamarCmd.cpp
  * Author: atoms
  *
- * Created on April 7, 2010, 10:46 PM
+ * Created on Agosto 11, 2013, 1:35 PM
  */
 
-#include "EncederBoilerCmd.h"
+#include "ProgramarCmd.h"
 #include <string.h>
 #include <stdio.h>
 
-EncederBoilerCmd::EncederBoilerCmd(Model* model, Controller* controller) {
+ProgramarCmd::ProgramarCmd(Model* model, Controller* controller) {
   this->procesa = false;
   this->controller = controller;
   this->model = model;
 }
 
-EncederBoilerCmd::~EncederBoilerCmd() {
+ProgramarCmd::~ProgramarCmd() {
 }
 
-void EncederBoilerCmd::ok() {
+void ProgramarCmd::ok() {
   if (procesa == false) {
     procesa = true;
 
@@ -41,16 +41,14 @@ void EncederBoilerCmd::ok() {
 
 }
 
-void EncederBoilerCmd::cancel() {
+void ProgramarCmd::cancel() {
 
-  if (model->boilerOn == false) {
-    model->howTimeOn = 0;
-  }
+
   controller->goHome();
 
 }
 
-void EncederBoilerCmd::up() {
+void ProgramarCmd::up() {
 
   if (procesa == false) {
 
@@ -65,7 +63,7 @@ void EncederBoilerCmd::up() {
 
 }
 
-void EncederBoilerCmd::down() {
+void ProgramarCmd::down() {
 
   if (procesa == false) {
     controller->goX(false);
@@ -80,26 +78,12 @@ void EncederBoilerCmd::down() {
 
 }
 
-void EncederBoilerCmd::display(char msg[]) {
-  char integer_string[4];
+void ProgramarCmd::display(char msg[]) {
 
-  sprintf(integer_string, "%d", model->howTimeOn);
 
   //Limpia string
   strcpy(msg, "");
+  strcat(msg, "Programar encendido automatico ?: ");
 
-  if (model->boilerOn == false && procesa == true) {
-
-    strcat(msg, "Encender cuanto tiempo?: ");
-    strcat(msg, integer_string);
-    strcat(msg, " min  ");
-
-  } else if (model->boilerOn == false) {
-    strcat(msg, "  Encender el      boiler ?     ");
-
-  } else {
-    strcat(msg, "   Apagar el       boiler ?     ");
-
-  }
 
 }

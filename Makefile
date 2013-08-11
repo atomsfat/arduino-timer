@@ -1,5 +1,5 @@
 BOARD := atmega168
-AVRDUDE_PORT:=/dev/ttyUSB1
+AVRDUDE_PORT:=/dev/ttyUSB0
 ARDUINO_PATH:=/home/atomsfat/java/arduino-1.0.5/
 EXTRA_DIRS=$(ARDUINO_PATH)libraries/LiquidCrystal/
 EXTRA_DIRS+=$(ARDUINO_PATH)libraries/Servo/

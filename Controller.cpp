@@ -8,6 +8,7 @@
 #include "Controller.h"
 #include "HomeCmd.h"
 #include "EncederBoilerCmd.h"
+#include "ProgramarCmd.h"
 #include <stdlib.h>
 
 Controller::Controller(Model* model) {
@@ -48,18 +49,18 @@ void Controller::display(char msg[]) {
 void Controller::goX(bool right) {
 
   if (right) {
-    if (x < 1) {
-      x++;
+    if (this->x <=1 ) {
+      this->x++;
     } else {
-      x = 0;
+      this->x = 0;
     }
 
   } else {
 
-    if (x > 0) {
-      x--;
+    if (this->x == 0) {
+      this->x= 2;
     } else {
-      x = 1;
+      this->x--;
     }
   }
 
@@ -76,7 +77,14 @@ void Controller::getCommand(int i) {
     delete (current);
 
     current = new HomeCmd(model, this);
-    break;
+
+   break;
+
+  case 2:
+     delete (current);
+
+     current = new ProgramarCmd(model, this);
+     break;
 
   case 1:
 
@@ -84,6 +92,8 @@ void Controller::getCommand(int i) {
 
     current = new EncederBoilerCmd(model, this);
     break;
+
+
   }
 }
 

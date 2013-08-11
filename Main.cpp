@@ -83,6 +83,9 @@ RTC_DS1307 RTC;
 DateTime current;
 
 void setup() {
+
+
+
   // initialize the pushbutton as input
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
@@ -138,7 +141,7 @@ void loop()
   }
 
   if (strlen(message) <= 17) {
-    lcd.setCursor(4, 1);
+    lcd.setCursor(0, 1);
 
     //lcd.print(dt7.year(), DEC);
     //lcd.print('/');
@@ -146,12 +149,13 @@ void loop()
     // lcd.print('/');
     // lcd.print(dt7.day(), DEC);
     // lcd.print(' ');
-
+    lcd.print("    ");
     lcd.print(current.hour(), DEC);
     lcd.print(':');
     lcd.print(current.minute(), DEC);
     lcd.print(':');
     lcd.print(current.second(), DEC);
+    lcd.print("    ");
 
   }
 

@@ -26,12 +26,12 @@ void HomeCmd::cancel() {
 }
 
 void HomeCmd::up() {
-  controller->goX(false);
+  controller->goX(true);
 
 }
 
 void HomeCmd::down() {
-  controller->goX(true);
+  controller->goX(false);
 }
 
 void HomeCmd::display(char msg[]) {
@@ -54,10 +54,10 @@ void HomeCmd::display(char msg[]) {
 
     strcat(msg, "Boiler encedido   por: ");
     strcat(msg, integer_string_howTimeOn);
-    strcat(msg, " seg");
+    strcat(msg, " seg   ");
 
   } else {
-    strcat(msg, " Boiler apagado");
+    strcat(msg, " Boiler apagado ");
 
   }
 }
