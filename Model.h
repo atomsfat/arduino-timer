@@ -25,7 +25,19 @@ public:
   uint32_t whenItStarted;
   uint32_t whenToturnOff;
 
+
+
+  uint32_t startTimePG1();
+  uint32_t endTimePG1();
+  void savePG1();
+
+
 private:
+   int hourPG1;
+   int minutePG1;
+   int hourEndPG1;
+   int minuteEndPG1;
+   int dayPG1;
 
 };
 

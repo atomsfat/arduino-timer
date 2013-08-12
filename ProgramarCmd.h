@@ -13,6 +13,14 @@
 class ProgramarCmd : public Command {
 private:
     bool procesa;
+    bool procesaHoraInicio;
+    bool procesaTiempo;
+    bool procesaDia;
+
+    int hourPG1;
+    int minutePG1;
+    int minutesOnPG1;
+    int dayPG1;
 
 public:
     ProgramarCmd(Model* model,  Controller* controller);
