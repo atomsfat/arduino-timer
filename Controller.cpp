@@ -80,13 +80,13 @@ void Controller::getCommand(int i) {
 
    break;
 
-  case 2:
+  case 1:
      delete (current);
 
      current = new ProgramarCmd(model, this);
      break;
 
-  case 1:
+  case 2:
 
     delete (current);
 

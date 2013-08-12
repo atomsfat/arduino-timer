@@ -58,7 +58,7 @@ void ProgramarCmd::up() {
     controller->goX(true);
 
   } else if (procesa == true && procesaHoraInicio == false && procesaTiempo == false && procesaDia == false) {
-    this->minutePG1 =    this->minutePG1 + 5;
+    this->minutePG1 =  this->minutePG1 + 5;
     if(this->minutePG1 >= 60){
       this->hourPG1++;
       this->minutePG1 = 0;
@@ -69,7 +69,10 @@ void ProgramarCmd::up() {
 
 
   } else if (procesa == true && procesaHoraInicio == true && procesaTiempo == false &&  procesaDia == false) {
+    if ( this->minutesOnPG1 < 60) {
 
+      this->minutesOnPG1  = this->minutesOnPG1  + 1;
+      }
 
   } else if (procesa == true && procesaHoraInicio == true && procesaTiempo == true && procesaDia == false) {
 
@@ -84,14 +87,32 @@ void ProgramarCmd::up() {
 
 void ProgramarCmd::down() {
 
-  if (procesa == false) {
-    controller->goX(false);
+  if (procesa == false && procesaHoraInicio == false && procesaTiempo == false && procesaDia == false) {
 
-  } else {
-    if (model->boilerOn == false && model->howTimeOn > 0) {
+    controller->goX(true);
 
-      model->howTimeOn = model->howTimeOn - 1;
+  } else if (procesa == true && procesaHoraInicio == false && procesaTiempo == false && procesaDia == false) {
+    this->minutePG1 =  this->minutePG1 - 5;
+    if(this->minutePG1 <= 0){
+      this->hourPG1--;
+      this->minutePG1 = 59;
     }
+    if(this->hourPG1 >= 0){
+      this->hourPG1 = 23;
+    }
+
+
+  } else if (procesa == true && procesaHoraInicio == true && procesaTiempo == false &&  procesaDia == false) {
+
+    if ( this->minutesOnPG1 > 0) {
+
+      this->minutesOnPG1= this->minutesOnPG1 - 1;
+      }
+  } else if (procesa == true && procesaHoraInicio == true && procesaTiempo == true && procesaDia == false) {
+
+
+  } else if (procesa == true && procesaHoraInicio == true && procesaTiempo == true && procesaDia == true) {
+
 
   }
 
@@ -105,22 +126,27 @@ void ProgramarCmd::display(char msg[]) {
 
 
   if (procesa == false && procesaHoraInicio == false && procesaTiempo == false && procesaDia == false) {
-    strcat(msg, "  Programar       encendido ?: ");
+    strcat(msg, "  Programar      encendido ?: ");
 
   } else if (procesa == true && procesaHoraInicio == false && procesaTiempo == false &&  procesaDia == false) {
-    char hour[2];
-    char minute[2];
-    sprintf(hour, "%d", hourPG1);
-    sprintf(minute, "%d", minutePG1);
+    char hour[4];
+    char minute[4];
+    sprintf(hour, "%d", this->hourPG1);
+    sprintf(minute, "%d", this->minutePG1);
 
-    strcat(msg, "    Hora de     encendido?: ");
+    strcat(msg, "    Hora de     encendido? ");
     strcat(msg, hour);
     strcat(msg, ":");
     strcat(msg, minute);
-    strcat(msg, "    ");
+
 
   } else if (procesa == true && procesaHoraInicio == true && procesaTiempo == false && procesaDia == false) {
-    strcat(msg, "Cuanto tiempo?: ");
+    char onTime[4];
+    sprintf(onTime, "%d", this->minutesOnPG1);
+    strcat(msg, "Tiempo encendido?: ");
+    strcat(msg, onTime);
+     strcat(msg, " min  ");
+
 
   } else if (procesa == true && procesaHoraInicio == true && procesaTiempo == true && procesaDia == false) {
     strcat(msg, "   Que dia: ?   ");
