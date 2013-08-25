@@ -16,11 +16,16 @@ private:
     bool procesaHoraInicio;
     bool procesaTiempo;
     bool procesaDia;
+ //   bool procesaDiaComplete;
+
 
     int hourPG1;
     int minutePG1;
     int minutesOnPG1;
     int dayPG1;
+    int dayWeek;
+
+    int currentDay;
 
 public:
     ProgramarCmd(Model* model,  Controller* controller);
