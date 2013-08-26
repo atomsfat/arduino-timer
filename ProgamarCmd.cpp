@@ -17,11 +17,11 @@ ProgramarCmd::ProgramarCmd(Model* model, Controller* controller) {
 	this->controller = controller;
 	this->model = model;
 
-	this-> hourPG1 = 0;
-	this->minutePG1 = 0;
-	this->minutesOnPG1 = 0;
-	this->dayPG1 = 0;
-	this->dayWeek = 37;
+	this-> hourPG1 = model->hourPG1;
+	this->minutePG1 = model->minutePG1;
+	this->minutesOnPG1 = model->minutesOnPG1;
+	this->dayWeek = model->dayPG1;
+
 
 	this->currentDay = 1;
 }
@@ -212,6 +212,12 @@ void ProgramarCmd::down() {
 	} else if (procesa == true && procesaHoraInicio == true && procesaTiempo
 			== true && procesaDia == true) {
 
+		 model->hourPG1 =this-> hourPG1;
+		 model->minutePG1 = this->minutePG1;
+		 model->minutesOnPG1 = this->minutesOnPG1;
+		 model->dayPG1 = this->dayWeek;
+		 model->savePG1();
+
 	}
 
 }
@@ -248,7 +254,7 @@ void ProgramarCmd::display(char msg[]) {
 	} else if (procesa == true && procesaHoraInicio == true && procesaTiempo
 			== true && procesaDia == false) {
 		if(currentDay == 8){
-			strcat(msg, "Guardar dias:  OK");
+			strcat(msg, "Guardar dias: OK");
 		}else{
 			strcat(msg, "   Que dia: ?   ");
 		}
