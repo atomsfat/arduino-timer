@@ -97,11 +97,42 @@ void setup() {
 	lcd.begin(1, 2);
 
 	myservo.attach(6); //set servo to pin 10
+
+
+
+	uint8_t buffer[4];
+	RTC.readMemory(0, buffer, 4);
+	model-> hourPG1 = buffer[0];
+	model->minutePG1 = buffer[1];
+	model->minutesOnPG1 = buffer[2];
+	model->dayPG1 = buffer[3];
+
+	  if(model-> hourPG1 >= 24 || model-> minutePG1 > 60){
+		  model-> hourPG1 = 0;
+		  model->minutePG1 = 0;
+		  model->minutesOnPG1 = 0;
+
+	  }
+	  if(model->dayPG1>127){
+		  model->dayPG1 = 0;
+	  }
+
+
 }
 
 void loop()
 
 {
+
+
+	uint8_t pg1[4];
+	pg1[0] = model-> hourPG1 ;
+	pg1[1] = model->minutePG1;
+	pg1[2] = model->minutesOnPG1;
+	pg1[3] = model->dayPG1;
+	RTC.writeMemory(0, pg1, 4);
+
+
 
 	current = RTC.now();
 

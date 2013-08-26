@@ -6,7 +6,7 @@
  */
 
 #include "Model.h"
-#include <EEPROM.h>
+
 
 Model::Model() {
  // this->hora = hora;
@@ -47,10 +47,10 @@ Model::~Model() {
 
 void Model::savePG1(){
 
-  EEPROM.write(1,this-> hourPG1 );
-  EEPROM.write(2,this->minutePG1 );
-  EEPROM.write(3,this->minutesOnPG1 );
-  EEPROM.write(4,this->dayPG1 );
+//  EEPROM.write(1,this-> hourPG1 );
+//  EEPROM.write(2,this->minutePG1 );
+//  EEPROM.write(3,this->minutesOnPG1 );
+//  EEPROM.write(4,this->dayPG1 );
 }
 
 

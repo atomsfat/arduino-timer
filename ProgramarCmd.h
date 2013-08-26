@@ -19,10 +19,11 @@ private:
  //   bool procesaDiaComplete;
 
 
-    int hourPG1;
-    int minutePG1;
-    int minutesOnPG1;
-    int dayPG1;
+    uint8_t hourPG1;
+    uint8_t minutePG1;
+    uint8_t minutesOnPG1;
+    uint8_t dayPG1;
+
     int dayWeek;
 
     int currentDay;
