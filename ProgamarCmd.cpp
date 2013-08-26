@@ -191,7 +191,7 @@ void ProgramarCmd::down() {
 		this->minutePG1 = this->minutePG1 - 5;
 		if (this->minutePG1 <= 0) {
 			this->hourPG1--;
-			this->minutePG1 = 59;
+			this->minutePG1 = 55;
 		}
 		if (this->hourPG1 <= 0) {
 			this->hourPG1 = 23;
