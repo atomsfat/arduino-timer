@@ -161,6 +161,8 @@ void ProgramarCmd::up() {
 		if (this->minutesOnPG1 < 60) {
 
 			this->minutesOnPG1 = this->minutesOnPG1 + 1;
+		}else{
+			this->minutesOnPG1 = 0;
 		}
 
 	} else if (procesa == true && procesaHoraInicio == true && procesaTiempo
@@ -191,7 +193,7 @@ void ProgramarCmd::down() {
 			this->hourPG1--;
 			this->minutePG1 = 59;
 		}
-		if (this->hourPG1 >= 0) {
+		if (this->hourPG1 <= 0) {
 			this->hourPG1 = 23;
 		}
 
@@ -212,11 +214,6 @@ void ProgramarCmd::down() {
 	} else if (procesa == true && procesaHoraInicio == true && procesaTiempo
 			== true && procesaDia == true) {
 
-		 model->hourPG1 =this-> hourPG1;
-		 model->minutePG1 = this->minutePG1;
-		 model->minutesOnPG1 = this->minutesOnPG1;
-		 model->dayPG1 = this->dayWeek;
-		 model->savePG1();
 
 	}
 
@@ -369,6 +366,12 @@ void ProgramarCmd::display(char msg[]) {
 	} else if (procesa == true && procesaHoraInicio == true && procesaTiempo
 			== true && procesaDia == true) {
 		strcat(msg, "Registro guardado exitosomante   ");
+
+		 model->hourPG1 = this->hourPG1;
+		 model->minutePG1 = this->minutePG1;
+		 model->minutesOnPG1 = this->minutesOnPG1;
+		 model->dayPG1 = this->dayWeek;
+		// model->savePG1();
 
 	}
 

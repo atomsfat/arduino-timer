@@ -25,13 +25,13 @@ void EncederBoilerCmd::ok() {
     if (model->boilerOn == true) {
 
       model->howTimeOn = 0;
-      model->boilerOn = false;
+      model->whenToturnOff = model->current;
       controller->goHome();
     }
   } else {
     if (model->boilerOn == false && model->howTimeOn > 0) {
 
-      model->boilerOn = true;
+   //   model->boilerOn = true;
       model->whenItStarted = model->current;
       model->whenToturnOff = model->current + (model->howTimeOn * 60);
       controller->goHome();

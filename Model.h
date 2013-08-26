@@ -11,31 +11,28 @@
 
 class Model {
 public:
-  //contructor
-  Model();
-  //destructor
-  virtual ~Model();
+	//contructor
+	Model();
+	//destructor
+	virtual ~Model();
 
-  //variables
-  int *hora;
-  uint32_t current;
+	//variables
+	int *hora;
+	uint32_t current;
 
-  bool boilerOn;
-  int howTimeOn;
-  uint32_t whenItStarted;
-  uint32_t whenToturnOff;
+	bool boilerOn;
+	int howTimeOn;
+	uint32_t whenItStarted;
+	uint32_t whenToturnOff;
 
-  int hourPG1;
-    int minutePG1;
-    int minutesOnPG1;
-    int dayPG1;
+	int hourPG1;
+	int minutePG1;
+	int minutesOnPG1;
+	int dayPG1;
 
-
-  void savePG1();
-
+	void savePG1();
 
 private:
-
 
 };
 

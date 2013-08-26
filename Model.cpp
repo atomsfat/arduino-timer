@@ -12,12 +12,20 @@ Model::Model() {
  // this->hora = hora;
   this->boilerOn = false;
   this->howTimeOn = 0;
+  this->whenItStarted = 0;
   this->whenToturnOff = 0;
 
-  this-> hourPG1 = EEPROM.read(1);
-  this->minutePG1 = EEPROM.read(2);
-  this->minutesOnPG1 = EEPROM.read(3);
-  this->dayPG1 = EEPROM.read(4);
+//  this-> hourPG1 = EEPROM.read(1);
+//  this->minutePG1 = EEPROM.read(2);
+//  this->minutesOnPG1 = EEPROM.read(3);
+//  this->dayPG1 = EEPROM.read(4);
+
+
+  this-> hourPG1 = 0;
+  this->minutePG1 = 0;
+  this->minutesOnPG1 = 0;
+  this->dayPG1 = 0;
+
 
   if(this-> hourPG1 > 24 || this-> minutePG1 > 60){
     this-> hourPG1 = 0;
@@ -35,13 +43,7 @@ Model::Model() {
 Model::~Model() {
 }
 
-uint32_t Model::startTimePG1(){
 
-}
-
-uint32_t Model::endTimePG1(){
-
-}
 
 void Model::savePG1(){
 
