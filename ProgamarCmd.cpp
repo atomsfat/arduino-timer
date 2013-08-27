@@ -17,10 +17,10 @@ ProgramarCmd::ProgramarCmd(Model* model, Controller* controller) {
 	this->controller = controller;
 	this->model = model;
 
-	this-> hourPG1 = model->hourPG1;
-	this->minutePG1 = model->minutePG1;
-	this->minutesOnPG1 = model->minutesOnPG1;
-	this->dayWeek = model->dayPG1;
+	this-> hourPG1 = model->programs[0].hourPG1;
+	this->minutePG1 = model->programs[0].minutePG1;
+	this->minutesOnPG1 = model->programs[0].minutesOnPG1;
+	this->dayWeek = model->programs[0].dayPG1;
 
 
 	this->currentDay = 1;
@@ -367,10 +367,10 @@ void ProgramarCmd::display(char msg[]) {
 			== true && procesaDia == true) {
 		strcat(msg, "Registro guardado exitosomante   ");
 
-		 model->hourPG1 = this->hourPG1;
-		 model->minutePG1 = this->minutePG1;
-		 model->minutesOnPG1 = this->minutesOnPG1;
-		 model->dayPG1 = this->dayWeek;
+		model->programs[0].hourPG1 = this->hourPG1;
+		model->programs[0].minutePG1 = this->minutePG1;
+		model->programs[0].minutesOnPG1 = this->minutesOnPG1;
+		model->programs[0].dayPG1 = this->dayWeek;
 		// model->savePG1();
 
 	}

@@ -15,26 +15,21 @@ Model::Model() {
   this->whenItStarted = 0;
   this->whenToturnOff = 0;
 
-//  this-> hourPG1 = EEPROM.read(1);
-//  this->minutePG1 = EEPROM.read(2);
-//  this->minutesOnPG1 = EEPROM.read(3);
-//  this->dayPG1 = EEPROM.read(4);
 
+  for(int i=0;i<2;i++){
+	  this->programs[i].hourPG1 = 0;
+	  this->programs[i].minutePG1 = 0;
+	  this->programs[i].minutesOnPG1 = 0;
+	  this->programs[i].dayPG1 = 0;
+	  if(this->programs[i].hourPG1 > 24 || this->programs[i].minutePG1> 60){
+		  this->programs[i].hourPG1= 0;
+		  this->programs[i].minutePG1= 0;
+		  this->programs[i].minutesOnPG1 = 0;
 
-  this-> hourPG1 = 0;
-  this->minutePG1 = 0;
-  this->minutesOnPG1 = 0;
-  this->dayPG1 = 0;
-
-
-  if(this-> hourPG1 > 24 || this-> minutePG1 > 60){
-    this-> hourPG1 = 0;
-    this->minutePG1 = 0;
-    this->minutesOnPG1 = 0;
-
-  }
-  if(this->dayPG1>127){
-	  this->dayPG1 = 0;
+	  }
+	  if(this->programs[i].dayPG1>127){
+		  this->programs[i].dayPG1 = 0;
+	  }
   }
 
 

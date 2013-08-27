@@ -10,6 +10,13 @@
 #include <inttypes.h>
 
 class Model {
+
+	struct PG {
+		uint8_t hourPG1;
+		uint8_t minutePG1;
+		uint8_t minutesOnPG1;
+		uint8_t dayPG1;
+	};
 public:
 	//contructor
 	Model();
@@ -25,10 +32,12 @@ public:
 	uint32_t whenItStarted;
 	uint32_t whenToturnOff;
 
-	uint8_t hourPG1;
-	uint8_t minutePG1;
-	uint8_t minutesOnPG1;
-	uint8_t dayPG1;
+//	uint8_t hourPG1;
+//	uint8_t minutePG1;
+//	uint8_t minutesOnPG1;
+//	uint8_t dayPG1;
+
+	struct PG programs[2];
 
 	void savePG1();
 

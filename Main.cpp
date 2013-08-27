@@ -99,24 +99,29 @@ void setup() {
 	myservo.attach(6); //set servo to pin 10
 
 
+	uint8_t buffer[8];
+	RTC.readMemory(0, buffer, 8);
 
-	uint8_t buffer[4];
-	RTC.readMemory(0, buffer, 4);
-	model-> hourPG1 = buffer[0];
-	model->minutePG1 = buffer[1];
-	model->minutesOnPG1 = buffer[2];
-	model->dayPG1 = buffer[3];
+	for (int i = 0; i < 2; i++) {
 
-	  if(model-> hourPG1 >= 24 || model-> minutePG1 > 60){
-		  model-> hourPG1 = 0;
-		  model->minutePG1 = 0;
-		  model->minutesOnPG1 = 0;
+		int offset = i * 4;
 
-	  }
-	  if(model->dayPG1>127){
-		  model->dayPG1 = 0;
-	  }
+		model->programs[i].hourPG1 = buffer[offset];
+		model->programs[i].minutePG1 = buffer[offset + 1];
+		model->programs[i].minutesOnPG1 = buffer[offset + 2];
+		model->programs[i].dayPG1 = buffer[offset + 3];
 
+		if (model->programs[i].hourPG1 > 24 || model->programs[i].minutePG1
+				> 60) {
+			model->programs[i].hourPG1 = 0;
+			model->programs[i].minutePG1 = 0;
+			model->programs[i].minutesOnPG1 = 0;
+
+		}
+		if (model->programs[i].dayPG1 > 127) {
+			model->programs[i].dayPG1 = 0;
+		}
+	}
 
 }
 
@@ -124,15 +129,19 @@ void loop()
 
 {
 
+	uint8_t pg1[8];
 
-	uint8_t pg1[4];
-	pg1[0] = model-> hourPG1 ;
-	pg1[1] = model->minutePG1;
-	pg1[2] = model->minutesOnPG1;
-	pg1[3] = model->dayPG1;
-	RTC.writeMemory(0, pg1, 4);
+	for (int i = 0; i < 2; i++) {
 
+		int offset = i * 4;
+		pg1[0 + offset] = model->programs[i].hourPG1;
+		pg1[1 + offset] = model->programs[i].minutePG1;
+		pg1[2 + offset] = model->programs[i].minutesOnPG1;
+		pg1[3 + offset] = model->programs[i].dayPG1;
 
+	}
+
+	RTC.writeMemory(0, pg1, 8);
 
 	current = RTC.now();
 
@@ -157,63 +166,66 @@ void loop()
 
 	int dow = current.dayOfWeek();
 
-	if (model->hourPG1 > 0 && model->minutePG1 > 0 && model->boilerOn == false) {
-		DateTime dt0(current.year(), current.month(), current.day(),
-				model->hourPG1, model->minutePG1, 0);
+	for (int i = 0; i < 2; i++) {
+		if ( model->programs[i].hourPG1 > 0 &&  model->programs[i].minutePG1 > 0 &&  model->boilerOn
+				== false) {
+			DateTime dt0(current.year(), current.month(), current.day(),
+					 model->programs[i].hourPG1,  model->programs[i].minutePG1, 0);
 
-		int tD = model->dayPG1 & 1; //Domingo
-		int tL = model->dayPG1 & 2;
-		int tM = model->dayPG1 & 4;
-		int tMi = model->dayPG1 & 8;
-		int tJ = model->dayPG1 & 16;
-		int tV = model->dayPG1 & 32;
-		int tS = model->dayPG1 & 64;
+			int tD =  model->programs[i].dayPG1 & 1; //Domingo
+			int tL =  model->programs[i].dayPG1 & 2;
+			int tM =  model->programs[i].dayPG1 & 4;
+			int tMi = model->programs[i].dayPG1 & 8;
+			int tJ =  model->programs[i].dayPG1 & 16;
+			int tV =  model->programs[i].dayPG1 & 32;
+			int tS =  model->programs[i].dayPG1 & 64;
 
-		if (dow == 0) {
-			if (tD == 1) {
-				model->whenItStarted = dt0.unixtime();
-				model->whenToturnOff = model->whenItStarted
-						+ (model->minutesOnPG1 * 60);
-			}
-		} else if (dow == 1) { //lunes
-			if (tL == 2) {
-				model->whenItStarted = dt0.unixtime();
-				model->whenToturnOff = model->whenItStarted
-						+ (model->minutesOnPG1 * 60);
-			}
+			if (dow == 0) {
+				if (tD == 1) {
+					model->whenItStarted = dt0.unixtime();
+					model->whenToturnOff = model->whenItStarted
+							+ (model->programs[i].minutesOnPG1 * 60);
+				}
+			} else if (dow == 1) { //lunes
+				if (tL == 2) {
+					model->whenItStarted = dt0.unixtime();
+					model->whenToturnOff = model->whenItStarted
+							+ (model->programs[i].minutesOnPG1 * 60);
+				}
 
-		} else if (dow == 2) {
-			if (tM == 4) {
-				model->whenItStarted = dt0.unixtime();
-				model->whenToturnOff = model->whenItStarted
-						+ (model->minutesOnPG1 * 60);
-			}
+			} else if (dow == 2) {
+				if (tM == 4) {
+					model->whenItStarted = dt0.unixtime();
+					model->whenToturnOff = model->whenItStarted
+							+ (model->programs[i].minutesOnPG1 * 60);
+				}
 
-		} else if (dow == 3) {
-			if (tMi == 8) {
-				model->whenItStarted = dt0.unixtime();
-				model->whenToturnOff = model->whenItStarted
-						+ (model->minutesOnPG1 * 60);
-			}
+			} else if (dow == 3) {
+				if (tMi == 8) {
+					model->whenItStarted = dt0.unixtime();
+					model->whenToturnOff = model->whenItStarted
+							+ (model->programs[i].minutesOnPG1 * 60);
+				}
 
-		} else if (dow == 4) {
-			if (tJ == 16) {
-				model->whenItStarted = dt0.unixtime();
-				model->whenToturnOff = model->whenItStarted
-						+ (model->minutesOnPG1 * 60);
-			}
+			} else if (dow == 4) {
+				if (tJ == 16) {
+					model->whenItStarted = dt0.unixtime();
+					model->whenToturnOff = model->whenItStarted
+							+ (model->programs[i].minutesOnPG1 * 60);
+				}
 
-		} else if (dow == 5) {
-			if (tV == 32) {
-				model->whenItStarted = dt0.unixtime();
-				model->whenToturnOff = model->whenItStarted
-						+ (model->minutesOnPG1 * 60);
-			}
-		} else if (dow == 6) {
-			if (tS == 64) {
-				model->whenItStarted = dt0.unixtime();
-				model->whenToturnOff = model->whenItStarted
-						+ (model->minutesOnPG1 * 60);
+			} else if (dow == 5) {
+				if (tV == 32) {
+					model->whenItStarted = dt0.unixtime();
+					model->whenToturnOff = model->whenItStarted
+							+ (model->programs[i].minutesOnPG1 * 60);
+				}
+			} else if (dow == 6) {
+				if (tS == 64) {
+					model->whenItStarted = dt0.unixtime();
+					model->whenToturnOff = model->whenItStarted
+							+ (model->programs[i].minutesOnPG1 * 60);
+				}
 			}
 		}
 	}
