@@ -59,8 +59,8 @@ extern "C" void __cxa_pure_virtual() {
 //Here my program start
 Servo myservo;
 // variables will change:
-int minServo = 5; //
-int maxServo = 175;
+int minServo = 175; //
+int maxServo = 5;
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 

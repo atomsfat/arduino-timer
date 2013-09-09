@@ -1,4 +1,4 @@
-BOARD := atmega168
+BOARD := atmega328
 AVRDUDE_PORT:=/dev/ttyUSB0
 ARDUINO_PATH:=/home/Atoms/bin/arduino-1.0.5/
 EXTRA_DIRS=$(ARDUINO_PATH)libraries/LiquidCrystal/

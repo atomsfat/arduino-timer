@@ -42,7 +42,7 @@ void HomeCmd::display(char msg[]) {
     sprintf(integer_string_howTimeOn, "%d", 0);
   }else{
     int timeOn = (model->whenToturnOff - model->current);
-    sprintf(integer_string_howTimeOn, "%d", timeOn);
+    sprintf(integer_string_howTimeOn, "%d", timeOn/60);
   }
 
 
@@ -54,7 +54,7 @@ void HomeCmd::display(char msg[]) {
 
     strcat(msg, "Boiler encedido   por: ");
     strcat(msg, integer_string_howTimeOn);
-    strcat(msg, " seg   ");
+    strcat(msg, " min   ");
 
   } else {
     strcat(msg, " Boiler apagado ");

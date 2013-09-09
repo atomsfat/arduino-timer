@@ -57,9 +57,9 @@ void EncederBoilerCmd::up() {
     controller->goX(true);
 
   } else {
-    if (model->boilerOn == false && model->howTimeOn < 60) {
+    if (model->boilerOn == false && model->howTimeOn < 120) {
 
-      model->howTimeOn = model->howTimeOn + 1;
+      model->howTimeOn = model->howTimeOn + 15;
     }
   }
 
@@ -73,7 +73,7 @@ void EncederBoilerCmd::down() {
   } else {
     if (model->boilerOn == false && model->howTimeOn > 0) {
 
-      model->howTimeOn = model->howTimeOn - 1;
+      model->howTimeOn = model->howTimeOn - 15;
     }
 
   }
