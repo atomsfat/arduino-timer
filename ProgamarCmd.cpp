@@ -148,7 +148,7 @@ void ProgramarCmd::up() {
 	} else if (procesa == true && procesaHoraInicio == false && procesaTiempo
 			== false && procesaDia == false) {
 		this->minutePG1 = this->minutePG1 + 5;
-		if (this->minutePG1 >= 120) {
+		if (this->minutePG1 >= 60) {
 			this->hourPG1++;
 			this->minutePG1 = 0;
 		}
@@ -158,7 +158,7 @@ void ProgramarCmd::up() {
 
 	} else if (procesa == true && procesaHoraInicio == true && procesaTiempo
 			== false && procesaDia == false) {
-		if (this->minutesOnPG1 < 60) {
+		if (this->minutesOnPG1 < 120) {
 
 			this->minutesOnPG1 = this->minutesOnPG1 + 1;
 		}else{
